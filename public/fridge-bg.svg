@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="100%" height="100%" opacity="0.15">
+  <!-- Fridge Body -->
+  <rect x="100" y="100" width="600" height="800" rx="40" fill="#ffffff" stroke="#64748b" stroke-width="12"/>
+  <!-- Fridge Interior -->
+  <rect x="130" y="130" width="540" height="740" rx="20" fill="#f1f5f9" stroke="#64748b" stroke-width="8"/>
+  <!-- Shelves -->
+  <line x1="130" y1="350" x2="670" y2="350" stroke="#64748b" stroke-width="12"/>
+  <line x1="130" y1="600" x2="670" y2="600" stroke="#64748b" stroke-width="12"/>
+  
+  <!-- Open Door (perspective) -->
+  <path d="M 700 100 L 850 20 L 850 980 L 700 900 Z" fill="#f8fafc" stroke="#64748b" stroke-width="12"/>
+  <rect x="730" y="400" width="25" height="200" rx="12" fill="#cbd5e1" stroke="#64748b" stroke-width="6"/> <!-- Handle -->
+
+  <!-- Spider Web -->
+  <path d="M 130 130 L 330 130 M 130 130 L 130 330 M 130 130 L 270 270 M 190 130 Q 160 160 130 190 M 260 130 Q 200 200 130 260 M 310 130 Q 220 220 130 310" stroke="#94a3b8" stroke-width="5" fill="none"/>
+  
+  <!-- Spider -->
+  <line x1="400" y1="130" x2="400" y2="250" stroke="#475569" stroke-width="3"/>
+  <circle cx="400" cy="270" r="20" fill="#1e293b"/>
+  <!-- Spider Legs -->
+  <path d="M 400 270 Q 360 240 340 280 M 400 270 Q 360 280 340 320 M 400 270 Q 440 240 460 280 M 400 270 Q 440 280 460 320" stroke="#1e293b" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+  <!-- Cockroach -->
+  <ellipse cx="280" cy="335" rx="30" ry="14" fill="#78350f"/>
+  <ellipse cx="240" cy="335" rx="10" ry="8" fill="#451a03"/> <!-- head -->
+  <!-- Antennae -->
+  <path d="M 235 330 Q 200 300 190 320 M 235 340 Q 200 370 190 350" stroke="#451a03" stroke-width="3" fill="none"/>
+  <!-- Legs -->
+  <path d="M 260 345 L 250 365 M 280 345 L 280 370 M 300 345 L 310 365" stroke="#78350f" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Dead Mouse -->
+  <ellipse cx="500" cy="575" rx="55" ry="25" fill="#94a3b8"/> <!-- body -->
+  <circle cx="440" cy="580" r="22" fill="#94a3b8"/> <!-- head -->
+  <!-- Mouse Ears -->
+  <circle cx="430" cy="560" r="15" fill="#cbd5e1" stroke="#94a3b8" stroke-width="3"/>
+  <circle cx="460" cy="560" r="15" fill="#cbd5e1" stroke="#94a3b8" stroke-width="3"/>
+  <!-- Mouse Tail -->
+  <path d="M 550 575 Q 620 575 590 520 Q 560 470 600 450" stroke="#94a3b8" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <!-- X Eyes -->
+  <path d="M 425 575 L 435 585 M 435 575 L 425 585 M 445 575 L 455 585 M 455 575 L 445 585" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+  <!-- Mouse Legs (up in the air) -->
+  <line x1="480" y1="550" x2="470" y2="510" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+  <line x1="520" y1="550" x2="530" y2="510" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+</svg>
