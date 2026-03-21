@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "tsx server.ts",
     "start": "node server.ts",
+    "prebuild": "tsx convert.js && tsx copy-icons.js",
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",

@@ -50,18 +50,6 @@ export default defineConfig(({mode}) => {
               sizes: '512x512',
               type: 'image/png',
               purpose: 'maskable'
-            },
-            {
-              src: '/icon.svg',
-              sizes: '192x192',
-              type: 'image/svg+xml',
-              purpose: 'any maskable'
-            },
-            {
-              src: '/icon.svg',
-              sizes: '512x512',
-              type: 'image/svg+xml',
-              purpose: 'any maskable'
             }
           ],
           screenshots: [
