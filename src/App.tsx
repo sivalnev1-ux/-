@@ -72,32 +72,44 @@ export default function App() {
     try {
       const reader = new FileReader();
       reader.onloadend = async () => {
-        const base64Data = (reader.result as string).split(',')[1];
-        
-        const response = await fetch('/api/analyze-image', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ base64Data, mimeType: file.type })
-        });
-
-        if (!response.ok) {
-          throw new Error('Server error');
-        }
-
-        const data = await response.json();
-        const newIngredients = data.text || '';
-        if (newIngredients) {
-          setIngredients((prev) => {
-            const separator = prev.trim() ? ', ' : '';
-            return prev + separator + newIngredients;
+        try {
+          const base64Data = (reader.result as string).split(',')[1];
+          
+          const response = await fetch('/api/analyze-image', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ base64Data, mimeType: file.type })
           });
+
+          let data;
+          try {
+            data = await response.json();
+          } catch (e) {
+            throw new Error('Server error');
+          }
+
+          if (!response.ok) {
+            throw new Error(data.error || 'Server error');
+          }
+
+          const newIngredients = data.text || '';
+          if (newIngredients) {
+            setIngredients((prev) => {
+              const separator = prev.trim() ? ', ' : '';
+              return prev + separator + newIngredients;
+            });
+          }
+        } catch (err: any) {
+          console.error(err);
+          setError(err.message || 'Не удалось распознать ингредиенты на фото.');
+        } finally {
+          setIsProcessingImage(false);
         }
-        setIsProcessingImage(false);
       };
       reader.readAsDataURL(file);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setError('Не удалось распознать ингредиенты на фото.');
+      setError(err.message || 'Не удалось распознать ингредиенты на фото.');
       setIsProcessingImage(false);
     }
     
@@ -125,15 +137,24 @@ export default function App() {
         body: JSON.stringify({ ingredients })
       });
 
-      if (!response.ok) {
-        throw new Error('Server error');
+      let data;
+      try {
+        data = await response.json();
+      } catch (e) {
+        throw new Error(`Server error: ${response.status}`);
       }
 
-      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || `Server error: ${response.status}`);
+      }
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
       setRecipes(data.text);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setError('Ошибка при генерации рецептов. Попробуйте позже.');
+      setError(`Ошибка при генерации рецептов: ${err.message || 'Попробуйте позже.'}`);
     } finally {
       setIsGenerating(false);
     }

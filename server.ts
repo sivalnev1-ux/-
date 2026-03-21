@@ -11,7 +11,11 @@ async function startServer() {
   app.use(express.json({ limit: '50mb' }));
   
   // Initialize Gemini API (runs securely on the server)
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey || apiKey === 'MY_GEMINI_API_KEY') {
+    console.error("CRITICAL: Invalid or missing GEMINI_API_KEY environment variable.");
+  }
+  const ai = new GoogleGenAI({ apiKey: apiKey || 'invalid_key' });
 
   // API Route: Analyze Image
   app.post("/api/analyze-image", async (req, res) => {
@@ -31,8 +35,15 @@ async function startServer() {
       });
 
       res.json({ text: response.text?.trim() || '' });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error analyzing image:", error);
+      
+      if (error.message && error.message.includes('API key not valid')) {
+        return res.status(500).json({ 
+          error: "Ошибка: Неверный API-ключ Gemini. Пожалуйста, проверьте настройки (Secrets в AI Studio или Environment Variables на Render) и укажите настоящий ключ от Google AI Studio (aistudio.google.com/app/apikey)." 
+        });
+      }
+      
       res.status(500).json({ error: "Failed to analyze image" });
     }
   });
@@ -60,8 +71,16 @@ async function startServer() {
       });
 
       res.json({ text: response.text || 'Ольга Юриковна ушла на перекур. Попробуй еще раз.' });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error generating recipes:", error);
+      
+      // Provide a clearer error message for API key issues
+      if (error.message && error.message.includes('API key not valid')) {
+        return res.status(500).json({ 
+          error: "Ошибка: Неверный API-ключ Gemini. Пожалуйста, проверьте настройки (Secrets в AI Studio или Environment Variables на Render) и укажите настоящий ключ от Google AI Studio (aistudio.google.com/app/apikey)." 
+        });
+      }
+      
       res.status(500).json({ error: "Failed to generate recipes" });
     }
   });
